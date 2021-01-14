@@ -123,7 +123,7 @@ d3.csv("assets/data/data.csv").then(function (cenData) {
     chartGroup.append("g")
         .call(leftAxis);
 
-    
+
     var circlesGroup = chartGroup.selectAll("circle")
         .data(cenData)
         .enter()
@@ -131,21 +131,26 @@ d3.csv("assets/data/data.csv").then(function (cenData) {
         .attr("cx", d => xLinearScale(d[chosenXAxis]))
         .attr("cy", d => yLinearScale(d.healthcare))
         .classed("stateCircle", true)
-        .attr("r", 15)
-        // .attr("fill", "pink")
-        // .attr("opacity", ".5");
-    var circleLabel = circlesGroup.append("text")
-    .attr('text-anchor', 'middle')
-    .attr('alignment-baseline', 'middle')
-    .style('font-size', '15px')
-    .classed("stateText", true)
-    // .attr("class", "stateText")
-    .text(d => d.abbr);
+        .attr("r", 15);
+   
+    var textLabel = circlesGroup.selectAll("text")
+        .data(cenData)
+        .append("text")
+        .enter()
+        .classed("stateText", true)
+        .attr("x", d => xLinearScale(d[chosenXAxis]))
+        .attr("y", d => yLinearScale(d.healthcare))
+        .text(d => d.abbr)
+        .attr("dominate-baseline", "middle")
+        .attr("text-anchor", "middle");
 
 
-    
 
-    
+        // .style('font-size', '15px')
+        // .classed("stateText", true)
+        // .text(d => d.abbr);
+
+        console.log(textLabel);
 
     // Create group for two x-axis labels
     var labelsGroup = chartGroup.append("g")
