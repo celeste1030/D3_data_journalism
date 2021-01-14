@@ -5,7 +5,7 @@ var svgHeight = 500;
 var margin = {
     top: 20,
     right: 40,
-    bottom: 60,
+    bottom: 80,
     left: 100
 };
 
@@ -99,6 +99,7 @@ d3.csv("assets/data/data.csv").then(function (cenData) {
         data.smokes = +data.smokes;
         data.obesity = +data.obesity;
         data.income = +data.income;
+        data.poverty = +data.poverty;
 
     });
     // xLinearScale function above csv import
@@ -132,7 +133,7 @@ d3.csv("assets/data/data.csv").then(function (cenData) {
         .attr("cy", d => yLinearScale(d.healthcare))
         .classed("stateCircle", true)
         .attr("r", 15);
-   
+
     var textLabel = chartGroup.selectAll("stateText")
         .data(cenData)
         .enter()
@@ -144,36 +145,73 @@ d3.csv("assets/data/data.csv").then(function (cenData) {
         .attr("dominate-baseline", "middle")
         .attr("text-anchor", "middle");
 
-        console.log(textLabel);
+    console.log(textLabel);
 
     // Create group for two x-axis labels
-    var labelsGroup = chartGroup.append("g")
+    var xlabelsGroup = chartGroup.append("g")
         .attr("transform", `translate(${width / 2}, ${height + 20})`);
 
-    var incomelabel = labelsGroup.append("text")
+    var incomelabel = xlabelsGroup.append("text")
         .attr("x", 0)
         .attr("y", 20)
-        .attr("value", "income") // value to grab for event listener
+        .attr("value", "income") 
         .classed("active", true)
         .text("Income (Median)");
 
-    var agelabel = labelsGroup.append("text")
+    var agelabel = xlabelsGroup.append("text")
         .attr("x", 0)
         .attr("y", 40)
-        .attr("value", "age") // value to grab for event listener
+        .attr("value", "age") 
         .classed("inactive", true)
         .text("Age (Median)");
 
-    // append y axis
-    chartGroup.append("text")
+    var povlabel = xlabelsGroup.append("text")
+        .attr("x", 0)
+        .attr("y", 60)
+        .attr("value", "poverty") 
+        .classed("inactive", true)
+        .text("In Poverty (%)");
+
+    // y axis group labels
+
+    var ylabelsGroup = chartGroup.append("g")
+
+    var healthLabel = ylabelsGroup.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", 0 - margin.left)
         .attr("x", 0 - (height / 2))
         .attr("dy", "1em")
-        .classed("axis-text", true)
-        .text("Healthcare (%)");
+        .attr("value", "healthcare") 
+        .classed("active", true) 
+        .text("Without Healthcare (%)");
 
-    // updateToolTip function above csv import
+    var smokesLabel = ylabelsGroup.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 20 - margin.left)
+        .attr("x", 0 - (height / 2))
+        .attr("dy", "1em")
+        .attr("value", "smokes") 
+        .classed("inactive", true) 
+        .text("Smokers (%)");
+
+    var obesityLabel = ylabelsGroup.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 40 - margin.left)
+        .attr("x", 0 - (height / 2))
+        .attr("dy", "1em")
+        .attr("value", "obesity") 
+        .classed("inactive", true) 
+        .text("Obesity (%)");
+
+    // chartGroup.append("text")
+    //     .attr("transform", "rotate(-90)")
+    //     .attr("y", 0 - margin.left)
+    //     .attr("x", 0 - (height / 2))
+    //     .attr("dy", "1em")
+    //     .classed("axis-text", true)
+    //     .text("Lacks Healthcare (%)");
+
+    // updateToolTip function 
     var circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
 
     // x axis labels event listener
