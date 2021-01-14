@@ -71,8 +71,8 @@ function updateToolTip(chosenXAxis, circlesGroup) {
     }
 
     var toolTip = d3.tip()
-        .attr("class", "tooltip")
-        .offset([80, -60])
+        .attr("class", "d3-tip")
+        .direction('n')
         .html(function (d) {
             return (`${d.abbr}<br>${label} ${d[chosenXAxis]}`);
         });
@@ -80,7 +80,7 @@ function updateToolTip(chosenXAxis, circlesGroup) {
     circlesGroup.call(toolTip);
 
     circlesGroup.on("mouseover", function (data) {
-        toolTip.show(data);
+        toolTip.show(data, this);
     })
         // onmouseout event
         .on("mouseout", function (data, index) {
@@ -123,16 +123,29 @@ d3.csv("assets/data/data.csv").then(function (cenData) {
     chartGroup.append("g")
         .call(leftAxis);
 
-    // append initial circles
+    
     var circlesGroup = chartGroup.selectAll("circle")
         .data(cenData)
         .enter()
         .append("circle")
         .attr("cx", d => xLinearScale(d[chosenXAxis]))
         .attr("cy", d => yLinearScale(d.healthcare))
-        .attr("r", 20)
-        .attr("fill", "pink")
-        .attr("opacity", ".5");
+        .classed("stateCircle", true)
+        .attr("r", 15)
+        // .attr("fill", "pink")
+        // .attr("opacity", ".5");
+    var circleLabel = circlesGroup.append("text")
+    .attr('text-anchor', 'middle')
+    .attr('alignment-baseline', 'middle')
+    .style('font-size', '15px')
+    .classed("stateText", true)
+    // .attr("class", "stateText")
+    .text(d => d.abbr);
+
+
+    
+
+    
 
     // Create group for two x-axis labels
     var labelsGroup = chartGroup.append("g")
