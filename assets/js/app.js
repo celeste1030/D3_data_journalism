@@ -133,22 +133,16 @@ d3.csv("assets/data/data.csv").then(function (cenData) {
         .classed("stateCircle", true)
         .attr("r", 15);
    
-    var textLabel = circlesGroup.selectAll("text")
+    var textLabel = chartGroup.selectAll("stateText")
         .data(cenData)
-        .append("text")
         .enter()
+        .append("text")
         .classed("stateText", true)
         .attr("x", d => xLinearScale(d[chosenXAxis]))
         .attr("y", d => yLinearScale(d.healthcare))
         .text(d => d.abbr)
         .attr("dominate-baseline", "middle")
         .attr("text-anchor", "middle");
-
-
-
-        // .style('font-size', '15px')
-        // .classed("stateText", true)
-        // .text(d => d.abbr);
 
         console.log(textLabel);
 
