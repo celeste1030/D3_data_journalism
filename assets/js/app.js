@@ -5,7 +5,7 @@ var svgHeight = 500;
 var margin = {
     top: 20,
     right: 40,
-    bottom: 80,
+    bottom: 90,
     left: 80
 };
 
@@ -32,9 +32,7 @@ function xScale(cenData, chosenXAxis) {
         d3.max(cenData, d => d[chosenXAxis]) * 1.2
         ])
         .range([0, width]);
-
     return xLinearScale;
-
 }
 
 function yScale(cenData, chosenYAxis) {
@@ -44,7 +42,7 @@ function yScale(cenData, chosenYAxis) {
     return yLinearScale;
 }
 
-// function used for updating xAxis and yaxis var upon click on axis label
+// function used for updating xAxis and yAxis var upon click on axis label
 function renderXaxes(newXScale, xAxis) {
     var bottomAxis = d3.axisBottom(newXScale);
     xAxis.transition()
@@ -61,17 +59,14 @@ function renderYaxes(newYScale, yAxis) {
     return yAxis;
 }
 
-// function used for updating circles group with a transition to
-// new circles
+// function used for updating circles group with a transition to new circles
 function renderXCircles(circlesGroup, newXScale, chosenXAxis, textLabel) {
-
     circlesGroup.transition()
         .duration(1000)
         .attr("cx", d => newXScale(d[chosenXAxis]));
     textLabel.transition()
         .duration(1000)
         .attr("x", d => newXScale(d[chosenXAxis]))
-
     return circlesGroup;
 }
 
@@ -83,28 +78,39 @@ function renderYCircles(circlesGroup, newYScale, chosenYAxis, textLabel) {
     textLabel.transition()
         .duration(1000)
         .attr("y", d => newYScale(d[chosenYAxis]))
-    // .attr("cy", d => newYScale(d[chosenYAxis]));
     return circlesGroup;
-
 }
 
-// function used for updating circles group with new tooltip
+//function used for updating circles group with new tooltip
 function updateToolTip(chosenXAxis, circlesGroup) {
 
-    var label;
+    var xlabel;
+    var ylabel;
 
     if (chosenXAxis === "income") {
-        label = "Income:";
+        xlabel = "Income:";
     }
-    else {
-        label = "Age";
+    else if (chosenXAxis === "age") {
+        xlabel = "Age:";
     }
+    else
+        xlabel = "% Poverty:";
+
+    if (chosenYAxis === "healthcare") {
+        ylabel = "% Without Healthcare:";
+    }
+    else if (chosenYAxis === "smokes") {
+        ylabel = "% Smokers:";
+    }
+    else
+        ylabel = "% Obesity:";
+
 
     var toolTip = d3.tip()
         .attr("class", "d3-tip")
         .direction('n')
         .html(function (d) {
-            return (`${d.abbr}<br>${label} ${d[chosenXAxis]}`);
+            return (`${d.abbr}<br>${xlabel} ${d[chosenXAxis]}<br>${ylabel} ${d[chosenYAxis]}`);
         });
 
     circlesGroup.call(toolTip);
@@ -120,6 +126,7 @@ function updateToolTip(chosenXAxis, circlesGroup) {
     return circlesGroup;
 }
 
+////read csv
 
 d3.csv("assets/data/data.csv").then(function (cenData) {
     console.log(cenData);
