@@ -13,7 +13,7 @@ In this assignment, I analyzed the trends shaping people's lives, as well as cre
 
 ## Steps
 
-###Step 1
+### Step 1
 
 1. More Data, More Dynamics
 
