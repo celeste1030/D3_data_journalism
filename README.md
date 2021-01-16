@@ -2,6 +2,8 @@
 
 Created by [Celeste Muniz - Lithgow](https://github.com/celeste1030)
 
+![us map](Images/usa.gif) 
+
 ## Table of Contents
 * [Objective](#objective)
 * [How to View](#how-to-view)
@@ -35,5 +37,13 @@ I added d3 tool-tips to my plot to reveal a specific element's data when the use
 ![tooltip](Images/d3tooltip.png) 
 
 ## Technologies
+
+D3
+
+Java
+
+Html
+
+CSS
 
 
