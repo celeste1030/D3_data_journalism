@@ -82,7 +82,7 @@ function renderYCircles(circlesGroup, newYScale, chosenYAxis, textLabel) {
 }
 
 //function used for updating circles group with new tooltip
-function updateToolTip(chosenXAxis, circlesGroup) {
+function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
 
     var xlabel;
     var ylabel;
@@ -248,7 +248,7 @@ d3.csv("assets/data/data.csv").then(function (cenData) {
 
 
     // updateToolTip function 
-    var circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
+    var circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
     // x axis labels event listener
     xlabelsGroup.selectAll("text")
@@ -273,7 +273,7 @@ d3.csv("assets/data/data.csv").then(function (cenData) {
                 circlesGroup = renderXCircles(circlesGroup, xLinearScale, chosenXAxis, textLabel);
 
                 // updates tooltips with new info
-                circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
+                circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
                 if (chosenXAxis === "income") {
                     incomeLabel
@@ -331,7 +331,7 @@ d3.csv("assets/data/data.csv").then(function (cenData) {
                 circlesGroup = renderYCircles(circlesGroup, yLinearScale, chosenYAxis, textLabel);
 
                 // updates tooltips 
-                circlesGroup = updateToolTip(chosenYAxis, circlesGroup);
+                circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
                 if (chosenYAxis === "healthcare") {
                     healthLabel
