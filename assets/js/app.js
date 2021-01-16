@@ -110,7 +110,7 @@ function updateToolTip(chosenXAxis, circlesGroup) {
         .attr("class", "d3-tip")
         .direction('n')
         .html(function (d) {
-            return (`${d.abbr}<br>${xlabel} ${d[chosenXAxis]}<br>${ylabel} ${d[chosenYAxis]}`);
+            return (`${d.state}<br>${xlabel} ${d[chosenXAxis]}<br>${ylabel} ${d[chosenYAxis]}`);
         });
 
     circlesGroup.call(toolTip);
